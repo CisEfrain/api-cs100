@@ -10,6 +10,9 @@ router.get("/usuarios/imagen/:uuid", controladores.usuarios.imagen)
 
 /* ASISTENCIAS */
 router.post("/asistencias/cerrar/", controladores.asistencias.cerrarJornada)
+/* RESIDENTES*/
+router.post("/asistencias/cerrar/", controladores.residents.importCsv)
+
 
 module.exports = router;  
 
