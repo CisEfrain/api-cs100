@@ -49,8 +49,8 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(configuracion.puerto, function () {
-  console.log('Servidor corriendo en : '+configuracion.servidor);
-
+  console.log('Servidor corriendo en : '+configuracion.servidor);configuracion.puerto
+  console.log('Servidor corriendo en : '+ configuracion.puerto);
 });
 
 module.exports = app;
