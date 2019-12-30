@@ -1,5 +1,4 @@
 const DB = require("./db.js");
-
 var residentes = {};
 const table = "residents";
 // Querys
@@ -11,7 +10,6 @@ residentes.verificar = function(data, callback) {
   obtenerResidentePorCorreo = `SELECT id,email FROM ${table} WHERE email IN ('${data.join(
     "','"
   )}') ORDER BY id desc`;
-
   DB.getConnection(function(err, connection) {
     connection.query(obtenerResidentePorCorreo, function(err, rows) {
       if (err) throw err;
@@ -22,12 +20,32 @@ residentes.verificar = function(data, callback) {
   /*   callback(null,  obtenerResidentePorCorreo ); */
 };
 
-residentes.importar(function data,callback){
-`	INSERT INTO 
-projects(name, start_date, end_date)
-VALUES
-('AI for Marketing','2019-08-01','2019-12-31'),
-('ML for Sales','2019-05-15','2019-11-20');
-`
-}
+residentes.importar = function(filtrados, condos_id, callback) {
+  var values = filtrados.map(el => {
+    return `('${el.nombre ? el.nombre : "vacio"}','${
+      el.email ? el.email : "vacio"
+    }','25f9e794323b453885f5181f1b624d0b',${
+      el.telefono ? el.telefono : "vacio"
+    },${el.comite && el.comite == "si" ? 1 : 0},${el.rut ? el.rut : "vacio"},${
+      el.departamento ? el.departamento : "vacio"
+    },${condos_id},1)`;
+  });
+
+  var consulta = `INSERT INTO residents(name,email,password,phone,committee,rut, departament,condos_id,approved) VALUES ${values.join(
+    ","
+  )}`;
+  console.log("consulta >>>>> ", consulta);
+
+  DB.getConnection(function(err, connection) {
+    connection.query(consulta, function(err, rows) {
+      if (err) callback(null, err);
+      else callback(null, rows);
+      connection.release();
+    });
+  });
+
+  /*   err = false;
+  if (err) throw err;
+  else callback(null, consulta); */
+};
 module.exports = residentes;
