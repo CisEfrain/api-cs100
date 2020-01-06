@@ -1,5 +1,5 @@
 
-let Entity = require("../modelos/event_category");
+let Entity = require("../modelos/events");
 
 exports.getAll = function(req, res) {
   Entity.getAll(function(error, data) {

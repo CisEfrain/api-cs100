@@ -2,7 +2,7 @@
 const Query = require("./querys/query.util");
 const validate = require("./querys/validate.util");
 var Model = {};
-const table = "event_category";
+const table = "shift_change";
 // Querys
 
 const get = `SELECT * FROM ${table} `;
@@ -32,7 +32,7 @@ Model.getOne = async function(id, callback) {
 };
 
 Model.add = async function(data, callback) {
-  let fields = ["name"];
+  let fields = ["worker_id","turn_id"];
   validate
     .fieldValidate(data, fields)
     .then(response => {

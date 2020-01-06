@@ -1,7 +1,7 @@
 
 const Query = require("./querys/query.util");
 const validate = require("./querys/validate.util");
-var shippingCompany = {};
+var Model = {};
 const table = "shipping_company";
 // Querys
 
@@ -12,7 +12,7 @@ const edit = `UPDATE ${table} SET ? WHERE id = ?`;
 const insert = `INSERT INTO ${table} SET ?`;
 const eliminate = `DELETE FROM ${table} WHERE id = ?;`;
 
-shippingCompany.getAll = function(callback) {
+Model.getAll = function(callback) {
   Query.find(get)
     .then(response => {
       callback(undefined, response);
@@ -21,7 +21,7 @@ shippingCompany.getAll = function(callback) {
       callback(err, undefined);
     });
 };
-shippingCompany.getOne = async function(id, callback) {
+Model.getOne = async function(id, callback) {
   findOne(getOne, id)
     .then(response => {
       callback(undefined, response);
@@ -31,7 +31,7 @@ shippingCompany.getOne = async function(id, callback) {
     });
 };
 
-shippingCompany.add = async function(data, callback) {
+Model.add = async function(data, callback) {
   let fields = ["name"];
   validate
     .fieldValidate(data, fields)
@@ -49,7 +49,7 @@ shippingCompany.add = async function(data, callback) {
       callback(err, undefined);
     });
 };
-shippingCompany.edit = function(data, id, callback) {
+Model.edit = function(data, id, callback) {
   Query.update(edit, data, id)
     .then(response => {
       callback(undefined, { msg: response });
@@ -58,7 +58,7 @@ shippingCompany.edit = function(data, id, callback) {
       callback(err, undefined);
     });
 };
-shippingCompany.delete = function(id, callback) {
+Model.delete = function(id, callback) {
   Query.remove(eliminate, id)
     .then(response => {
       console.log(response);
@@ -69,4 +69,4 @@ shippingCompany.delete = function(id, callback) {
       callback(err, undefined);
     });
 };
-module.exports = shippingCompany;
+module.exports = Model;

@@ -2,7 +2,7 @@
 const Query = require("./querys/query.util");
 const validate = require("./querys/validate.util");
 var Model = {};
-const table = "event_category";
+const table = "turns";
 // Querys
 
 const get = `SELECT * FROM ${table} `;
