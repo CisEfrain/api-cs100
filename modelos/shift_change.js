@@ -41,7 +41,8 @@ Model.add = async function(data, callback) {
           callback(undefined, { insertId: response.insertId });
         })
         .catch(err => {
-          callback(err, undefined);
+          if(err.hasOwnProperty('errno') && err.errno == 1452) callback('error de relacion en bd', undefined);
+          else callback(err, undefined);
         });
     })
     .catch(err => {
