@@ -24,7 +24,7 @@ exports.getAllInCondo = function(req, res) {
   let token = req.headers.authorization.split(" ")[1];
   console.log(token);
   let decoded = jwt.verify(`${token}`, "bazam");
-  console.log('decoded >>>>',decoded)
+  console.log("decoded >>>>", decoded);
   if (token) {
     Entity.getAllInCondo(decoded.condo_id, function(error, data) {
       //si existe
@@ -43,16 +43,17 @@ exports.getAllInCondo = function(req, res) {
 exports.add = function(req, res) {
   let body = req.body;
   let token = req.headers.authorization.split(" ")[1];
-  console.log('token add >>>>>', token);
+  console.log("token add >>>>>", token);
   let decoded = jwt.verify(`${token}`, "bazam");
-  console.log('token add >>>>>', decoded);
+  console.log("token add >>>>>", decoded);
   if (token) {
-    body.decoded.condo_id = decoded.condo_id;
+    body.condo_id = decoded.condo_id;
     Entity.add(body, function(error, data) {
       //si existe
       if (typeof data !== "undefined") {
         res.status(200).json(data);
       } else if (error) {
+        console.log("error add elseif >>>>", error);
         res.status(404).json({ msg: error });
       } else {
         res.status(404).json({ msg: "No hay registro en la base de datos" });

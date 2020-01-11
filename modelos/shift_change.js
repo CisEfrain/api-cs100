@@ -58,7 +58,7 @@ Model.add = async function(data, callback) {
           console.log("token add inner error >>>>>", err);
           if (err.hasOwnProperty("errno") && err.errno == 1452)
             callback("error de relacion en bd", undefined);
-          else callback(err, undefined);
+          else callback("err >>>>" + err, undefined);
         });
     })
     .catch(err => {
