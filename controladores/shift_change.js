@@ -43,7 +43,7 @@ exports.getAllInCondo = function(req, res) {
 exports.add = function(req, res) {
   let body = req.body;
   let token = req.headers.authorization.split(" ")[1];
-  console.log(token);
+  console.log('token add >>>>>', token);
   let decoded = jwt.verify(`${token}`, "bazam");
   if (token) {
     body.decoded.condo_id = decoded.condo_id;

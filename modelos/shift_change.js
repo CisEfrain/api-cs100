@@ -23,6 +23,7 @@ Model.getAll = function(callback) {
 };
 
 Model.getAllInCondo = function(id, callback) {
+  console.log("el id >>>> ", id);
   Query.findAllInCondo(getAllInCondo, id)
     .then(response => {
       callback(undefined, response);
@@ -43,15 +44,18 @@ Model.getOne = async function(id, callback) {
 };
 
 Model.add = async function(data, callback) {
-  let fields = ["worker_id", "turn_id"];
+  let fields = ["worker_id", "turn_id", "condo_id"];
+  console.log("model data add >>>>>", data);
   validate
     .fieldValidate(data, fields)
     .then(response => {
       Query.save(insert, data)
         .then(response => {
+          console.log("token add inner >>>>>", response);
           callback(undefined, { insertId: response.insertId });
         })
         .catch(err => {
+          console.log("token add inner error >>>>>", err);
           if (err.hasOwnProperty("errno") && err.errno == 1452)
             callback("error de relacion en bd", undefined);
           else callback(err, undefined);
