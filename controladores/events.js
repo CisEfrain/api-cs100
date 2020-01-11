@@ -12,6 +12,7 @@ exports.getAll = function(req, res) {
 };
 exports.getManyById = function(req, res) {
   let id = req.params.id;
+  console.log(req.params)
   Entity.getManyById(id, function(error, data) {
     //si existe
     if (typeof data !== "undefined" && data.length > 0) {
@@ -23,7 +24,7 @@ exports.getManyById = function(req, res) {
 };
 exports.getOne = function(req, res) {
   let id = req.params.id;
-  Entity.getOne(req.params.id, function(error, data) {
+  Entity.getOne(id, function(error, data) {
     //si existe
     if (typeof data !== "undefined" && data.length > 0) {
       res.status(200).json(data);
