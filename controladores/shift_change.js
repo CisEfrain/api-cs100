@@ -45,6 +45,7 @@ exports.add = function(req, res) {
   let token = req.headers.authorization.split(" ")[1];
   console.log('token add >>>>>', token);
   let decoded = jwt.verify(`${token}`, "bazam");
+  console.log('token add >>>>>', decoded);
   if (token) {
     body.decoded.condo_id = decoded.condo_id;
     Entity.add(body, function(error, data) {
