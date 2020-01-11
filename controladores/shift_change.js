@@ -26,7 +26,6 @@ exports.add = function(req, res) {
   let body = req.body;
   Entity.add(body, function(error, data) {
     //si existe
-
     if (typeof data !== "undefined") {
       res.status(200).json(data);
     } else if (error) {

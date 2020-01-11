@@ -1,4 +1,3 @@
-
 const Query = require("./querys/query.util");
 const validate = require("./querys/validate.util");
 var Model = {};
@@ -10,8 +9,8 @@ const getOne = `SELECT * FROM ${table} WHERE id = ?`;
 const edit = `UPDATE ${table} SET ? WHERE id = ?`;
 //const getOne = `SELECT * FROM ${table} WHERE ? ${field} = ?`;
 const insert = `INSERT INTO ${table} SET ?`;
+const insertMany = `INSERT INTO ${table} (shift_change_id,	category_id,	comment	) VALUES ?`;
 const eliminate = `DELETE FROM ${table} WHERE id = ?;`;
-
 Model.getAll = function(callback) {
   Query.find(get)
     .then(response => {
@@ -46,6 +45,16 @@ Model.add = async function(data, callback) {
     })
     .catch(err => {
       console.log(err);
+      callback(err, undefined);
+    });
+};
+Model.addMany = async function(data, callback) {
+  //let fields = ["turn_id", "category_id"];
+  Query.saveMany(insertMany, data)
+    .then(response => {
+      callback(undefined, { insertId: response });
+    })
+    .catch(err => {
       callback(err, undefined);
     });
 };

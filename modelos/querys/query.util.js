@@ -30,6 +30,19 @@ exports.save = async function(query, data) {
     });
   });
 };
+
+exports.saveMany = async function(query, data) {
+  //data is array of string ['val1', 'val2', 'val3']
+  // use Object.values(Obj) to convert object to array
+  return await new Promise((resolve, reject) => {
+    DB.getConnection(function(err, connection) {
+      connection.query(query, [data], function(err, result) {
+        connection.release();
+        return err ? reject(err) : resolve(result);
+      });
+    });
+  });
+};
 exports.update = async function(query, body, id) {
   return await new Promise((resolve, reject) => {
     DB.getConnection(function(err, connection) {
