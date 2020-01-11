@@ -34,7 +34,7 @@ router.delete("/event_category/:id", controladores.event_category.delete);
 router.get("/events/", controladores.events.getAll);
 router.get("/events/:id", controladores.events.getOne);
 router.post("/events/", controladores.events.add);
-router.get("/shift_change/many/:id", controladores.shift_change.getManyById);
+router.get("/shift_change/many/:id", controladores.events.getManyById);
 router.post("/events/many", controladores.events.addMany);
 router.put("/events/", controladores.events.edit);
 router.delete("/events/:id", controladores.events.delete);
