@@ -22,7 +22,7 @@ Model.getAll = function(callback) {
     });
 };
 Model.getOne = async function(id, callback) {
-  findOne(getOne, id)
+  Query.findOne(getOne, id)
     .then(response => {
       callback(undefined, response);
     })
@@ -31,7 +31,7 @@ Model.getOne = async function(id, callback) {
     });
 };
 Model.getManyById = async function(id, callback) {
-  findOne(getManyById, id)
+  Query.findOne(getManyById, id)
     .then(response => {
       callback(undefined, response);
     })
