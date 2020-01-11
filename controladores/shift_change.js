@@ -36,7 +36,7 @@ exports.getAllInCondo = function(req, res) {
   } else {
     res.status(500).json({ msg: "No se recibio token" });
   }
-  res.status(200).json(decoded);
+  /* res.status(200).json(decoded); */
 };
 
 exports.add = function(req, res) {
