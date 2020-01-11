@@ -49,6 +49,7 @@ router.delete("/turns/:id", controladores.turns.delete);
 /* CAMBIO DE TURNO  */
 
 router.get("/shift_change/", controladores.shift_change.getAll);
+router.get("/shift_change/many/", controladores.shift_change.getAllInCondo);
 router.get("/shift_change/:id", controladores.shift_change.getOne);
 router.post("/shift_change/", controladores.shift_change.add);
 router.put("/shift_change/", controladores.shift_change.edit);

@@ -10,6 +10,27 @@ exports.find = async function(query) {
     });
   });
 };
+
+exports.findAllInCondo = async function(query, id) {
+  return await new Promise((resolve, reject) => {
+    DB.getConnection(function(err, connection) {
+      connection.query(query, id, function(err, result) {
+        connection.release();
+        return err ? reject(err) : resolve(result);
+      });
+    });
+  });
+};
+exports.findMany = async function(query) {
+  return await new Promise((resolve, reject) => {
+    DB.getConnection(function(err, connection) {
+      connection.query(query, function(err, result) {
+        connection.release();
+        return err ? reject(err) : resolve(result);
+      });
+    });
+  });
+};
 exports.findOne = async function(query, find) {
   return await new Promise((resolve, reject) => {
     DB.getConnection(function(err, connection) {

@@ -1,3 +1,4 @@
 const jwt = require('jsonwebtoken')
 
-var decoded = jwt.verify(token, 'secret')
+var decoded = jwt.verify(token, 'bazam')
+
