@@ -6,6 +6,7 @@ const table = "events";
 
 const get = `SELECT * FROM ${table} `;
 const getOne = `SELECT * FROM ${table} WHERE id = ?`;
+const getManyById = `SELECT * FROM ${table} WHERE shift_change_id = ?`;
 const edit = `UPDATE ${table} SET ? WHERE id = ?`;
 //const getOne = `SELECT * FROM ${table} WHERE ? ${field} = ?`;
 const insert = `INSERT INTO ${table} SET ?`;
@@ -29,7 +30,15 @@ Model.getOne = async function(id, callback) {
       callback(err, undefined);
     });
 };
-
+Model.getManyById = async function(id, callback) {
+  findOne(getManyById, id)
+    .then(response => {
+      callback(undefined, response);
+    })
+    .catch(err => {
+      callback(err, undefined);
+    });
+};
 Model.add = async function(data, callback) {
   let fields = ["turn_id", "category_id"];
   validate

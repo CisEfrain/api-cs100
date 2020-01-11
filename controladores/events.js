@@ -10,7 +10,19 @@ exports.getAll = function(req, res) {
     }
   });
 };
+exports.getManyById = function(req, res) {
+  let id = req.params.id;
+  Entity.getManyById(id, function(error, data) {
+    //si existe
+    if (typeof data !== "undefined" && data.length > 0) {
+      res.status(200).json(data);
+    } else {
+      res.status(404).json({ msg: "No hay registro en la base de datos" });
+    }
+  });
+};
 exports.getOne = function(req, res) {
+  let id = req.params.id;
   Entity.getOne(req.params.id, function(error, data) {
     //si existe
     if (typeof data !== "undefined" && data.length > 0) {
@@ -24,7 +36,7 @@ exports.addMany = function(req, res) {
   let body = req.body;
   var parsed = body.map(el => Object.values(el));
   /* res.status(200).json(parsed); */
-  console.log(parsed)
+  console.log(parsed);
   Entity.addMany(parsed, function(error, data) {
     //si existe
     if (typeof data !== "undefined") {
