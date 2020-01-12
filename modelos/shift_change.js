@@ -5,7 +5,7 @@ const table = "shift_change";
 // Querys
 
 const get = `SELECT * FROM ${table} `;
-const getAllInCondo = `SELECT * FROM ${table} WHERE condo_id = ?`;
+const getAllInCondo = `SELECT * FROM ${table}  WHERE checked_by = 0 condo_id = ?`;
 const getOne = `SELECT * FROM ${table} WHERE id = ?`;
 const edit = `UPDATE ${table} SET ? WHERE id = ?`;
 //const getOne = `SELECT * FROM ${table} WHERE ? ${field} = ?`;
@@ -67,6 +67,15 @@ Model.add = async function(data, callback) {
     });
 };
 Model.edit = function(data, id, callback) {
+  Query.update(edit, data, id)
+    .then(response => {
+      callback(undefined, { msg: response });
+    })
+    .catch(err => {
+      callback(err, undefined);
+    });
+};
+Model.receiveGuard = function(data, id, callback) {
   Query.update(edit, data, id)
     .then(response => {
       callback(undefined, { msg: response });

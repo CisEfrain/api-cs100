@@ -54,6 +54,7 @@ router.get("/shift_change/many/", controladores.shift_change.getAllInCondo);
 router.get("/shift_change/:id", controladores.shift_change.getOne);
 router.post("/shift_change/", controladores.shift_change.add);
 router.put("/shift_change/", controladores.shift_change.edit);
+router.put("/shift_change/receive_guard/:id", controladores.shift_change.receiveGuard);
 router.delete("/shift_change/:id", controladores.shift_change.delete);
 
 module.exports = router;

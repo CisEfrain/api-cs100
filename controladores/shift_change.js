@@ -63,7 +63,22 @@ exports.add = function(req, res) {
     res.status(500).json({ msg: "No se recibio token" });
   }
 };
-
+exports.receiveGuard = function(req, res) {
+  let body = req.body;
+  let id = req.body.id;
+  res.status(200).json({
+    body,
+    id
+  });
+  /*   Entity.edit(body, id, function(error, data) {
+    //si existe
+    if (typeof data !== "undefined") {
+      res.status(200).json({ msg: "datos actualizados" });
+    } else {
+      res.status(404).json({ msg: "No hay registro en la base de datos" });
+    }
+  }); */
+};
 exports.edit = function(req, res) {
   let body = req.body;
   let id = req.body.id;
