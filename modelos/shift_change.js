@@ -5,7 +5,7 @@ const table = "shift_change";
 // Querys
 
 const get = `SELECT * FROM ${table} `;
-const getAllInCondo = `SELECT * FROM ${table}  WHERE checked_by = 0 condo_id = ?`;
+const getAllInCondo = `SELECT * FROM ${table}  WHERE checked_by = 0 AND condo_id = ?`;
 const getOne = `SELECT * FROM ${table} WHERE id = ?`;
 const edit = `UPDATE ${table} SET ? WHERE id = ?`;
 //const getOne = `SELECT * FROM ${table} WHERE ? ${field} = ?`;

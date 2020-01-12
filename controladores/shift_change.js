@@ -64,20 +64,18 @@ exports.add = function(req, res) {
   }
 };
 exports.receiveGuard = function(req, res) {
-  let body = req.body;
-  let id = req.body.id;
-  res.status(200).json({
-    body,
-    id
-  });
-  /*   Entity.edit(body, id, function(error, data) {
+  let body = req.body.id;
+  let id = req.params.id;
+  Entity.edit({ checked_by: body }, id, function(error, data) {
     //si existe
     if (typeof data !== "undefined") {
       res.status(200).json({ msg: "datos actualizados" });
+    } else if (err) {
+      res.status(500).json({ msg: "error " + error });
     } else {
       res.status(404).json({ msg: "No hay registro en la base de datos" });
     }
-  }); */
+  });
 };
 exports.edit = function(req, res) {
   let body = req.body;
