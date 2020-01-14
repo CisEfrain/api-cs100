@@ -1,6 +1,9 @@
 let express = require("express");
 let router = express.Router();
 let controladores = require(".././controladores");
+let upload = require("../libs/image-upload");
+/* IMAGES*/
+router.post("/images/", upload.array("images"), controladores.images.add);
 
 /* TAREAS */
 router.get("/tareas/:worker", controladores.tareas.getTrabajador);
@@ -54,7 +57,10 @@ router.get("/shift_change/many/", controladores.shift_change.getAllInCondo);
 router.get("/shift_change/:id", controladores.shift_change.getOne);
 router.post("/shift_change/", controladores.shift_change.add);
 router.put("/shift_change/", controladores.shift_change.edit);
-router.put("/shift_change/receive_guard/:id", controladores.shift_change.receiveGuard);
+router.put(
+  "/shift_change/receive_guard/:id",
+  controladores.shift_change.receiveGuard
+);
 router.delete("/shift_change/:id", controladores.shift_change.delete);
 
 module.exports = router;
