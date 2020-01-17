@@ -3,7 +3,7 @@ let router = express.Router();
 let controladores = require(".././controladores");
 let upload = require("../libs/image-upload");
 /* IMAGES*/
-router.post("/images/", upload.array("images"), controladores.images.add);
+router.post("/images/", controladores.images.add);
 
 /* TAREAS */
 router.get("/tareas/:worker", controladores.tareas.getTrabajador);
