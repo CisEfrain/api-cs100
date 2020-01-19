@@ -11,6 +11,7 @@ const edit = `UPDATE ${table} SET ? WHERE id = ?`;
 //const getOne = `SELECT * FROM ${table} WHERE ? ${field} = ?`;
 const insert = `INSERT INTO ${table} SET ?`;
 const insertMany = `INSERT INTO ${table} (shift_change_id,	category_id,	comment	) VALUES ?`;
+const insertManyWithImages = `INSERT INTO ${table} (shift_change_id,	category_id,	comment,image_uuid,image_mime) VALUES ?`;
 const eliminate = `DELETE FROM ${table} WHERE id = ?;`;
 Model.getAll = function(callback) {
   Query.find(get)
@@ -54,6 +55,16 @@ Model.add = async function(data, callback) {
     })
     .catch(err => {
       console.log(err);
+      callback(err, undefined);
+    });
+};
+Model.addManyWithImages = async function(data, callback) {
+  //let fields = ["turn_id", "category_id"];
+  Query.saveMany(insertManyWithImages, data)
+    .then(response => {
+      callback(undefined, { insertId: response });
+    })
+    .catch(err => {
       callback(err, undefined);
     });
 };

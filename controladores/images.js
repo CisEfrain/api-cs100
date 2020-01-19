@@ -12,11 +12,7 @@ exports.add = function(req, res) {
     let data = req.body.name.map(el => {
       return JSON.parse(el);
     });
-    /*     console.log(data); */
-    data = [];
-    data.push({ name: "name10.hola", imageName: "" });
-    data.push({ name: "name222.hola", imageName: "" });
-    data.push({ name: "name13330.hola", imageName: "" });
+
     var r = data.map(field => {
       console.log(req.files);
       let filtered;
