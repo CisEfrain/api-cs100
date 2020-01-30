@@ -10,6 +10,7 @@ router.get("/tareas/:worker", controladores.tareas.getTrabajador);
 
 /* USUARIOS */
 router.get("/usuarios/imagen/:uuid", controladores.usuarios.imagen);
+router.get("/watchers/", controladores.usuarios.getw);
 
 /* ASISTENCIAS */
 router.post("/asistencias/cerrar/", controladores.asistencias.cerrarJornada);
@@ -63,4 +64,11 @@ router.put(
 );
 router.delete("/shift_change/:id", controladores.shift_change.delete);
 
+/* RECEPCION DE PAQUETES*/
+
+router.get("/package_reception/", controladores.package_reception.getAll);
+router.get("/package_reception/:id", controladores.package_reception.getOne);
+router.post("/package_reception/", controladores.package_reception.add);
+router.put("/package_reception/", controladores.package_reception.edit);
+router.delete("/package_reception/:id", controladores.package_reception.delete);
 module.exports = router;
