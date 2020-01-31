@@ -14,6 +14,7 @@ const eliminate = `DELETE FROM ${table} WHERE id = ?;`;
 
 //const getWatcher = `SELECT * FROM ${table} WHERE = ? `;
 Model.getAll = function(callback) {
+  console.log("asadsd1");
   Query.find(get)
     .then(response => {
       if (response && response.length > 0) {
@@ -27,6 +28,8 @@ Model.getAll = function(callback) {
             callback(undefined, response);
           }
         });
+      } else {
+        callback(undefined, []);
       }
     })
     .catch(err => {

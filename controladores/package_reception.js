@@ -1,9 +1,15 @@
 let Entity = require("../modelos/package_reception");
 const jwt = require("jsonwebtoken");
+const moment = require("moment");
+/* moment.prototype.toMySqlDateTime = function () {
+  return this.format('YYYY-MM-DD HH:mm:ss');
+}; */
+
 exports.getAll = function(req, res) {
   Entity.getAll(function(error, data) {
     //si existe
-    if (typeof data !== "undefined" && data.length > 0) {
+    console.log(data)
+    if (data !== "undefined" && data.length > 0) {
       res.status(200).json(data);
     } else {
       res.status(404).json({ msg: "No hay registro en la base de datos" });
