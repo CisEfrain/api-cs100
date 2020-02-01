@@ -1,6 +1,7 @@
 let express = require("express");
 let router = express.Router();
 let controladores = require(".././controladores");
+let verifyToken = require("../shared/verifyToken")
 let upload = require("../libs/image-upload");
 /* IMAGES*/
 router.post("/images/", controladores.images.add);
@@ -66,7 +67,7 @@ router.delete("/shift_change/:id", controladores.shift_change.delete);
 
 /* RECEPCION DE PAQUETES*/
 
-router.get("/package_reception/", controladores.package_reception.getAll);
+router.get("/package_reception/",  verifyToken, controladores.package_reception.getAll);
 router.get("/package_reception/:id", controladores.package_reception.getOne);
 router.post("/package_reception/", controladores.package_reception.add);
 router.put("/package_reception/", controladores.package_reception.edit);

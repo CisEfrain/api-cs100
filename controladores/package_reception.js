@@ -8,7 +8,7 @@ const moment = require("moment");
 exports.getAll = function(req, res) {
   Entity.getAll(function(error, data) {
     //si existe
-    console.log(data)
+
     if (data !== "undefined" && data.length > 0) {
       res.status(200).json(data);
     } else {
