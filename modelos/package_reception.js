@@ -11,10 +11,13 @@ const edit = `UPDATE ${table} SET ? WHERE id = ?`;
 //const getOne = `SELECT * FROM ${table} WHERE ? ${field} = ?`;
 const insert = `INSERT INTO ${table} SET ?`;
 const eliminate = `DELETE FROM ${table} WHERE id = ?;`;
-
+const getAllByCondo = `
+SELECT  a.worker_id, a.shipping_company_id, a.addreesse, a.address,
+a.delivered_date, a.created_at, a.updated_at, a.deleted_at 
+FROM  package_reception a LEFT JOIN workers b ON b.condos_id = ? GROUP BY a.id
+`;
 //const getWatcher = `SELECT * FROM ${table} WHERE = ? `;
 Model.getAll = function(callback) {
- 
   Query.find(get)
     .then(response => {
       if (response && response.length > 0) {
@@ -39,7 +42,7 @@ Model.getAll = function(callback) {
 
 Model.getAllInCondo = function(id, callback) {
   console.log("el id >>>> ", id);
-  Query.findAllInCondo(getAllInCondo, id)
+  Query.findAllInCondo(getAllByCondo, id)
     .then(response => {
       callback(undefined, response);
     })

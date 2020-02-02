@@ -6,6 +6,7 @@ const moment = require("moment");
 }; */
 
 exports.getAll = function(req, res) {
+  console.log(res.decodedToken);
   Entity.getAll(function(error, data) {
     //si existe
 
@@ -27,22 +28,15 @@ exports.getOne = function(req, res) {
   });
 };
 exports.getAllInCondo = function(req, res) {
-  let token = req.headers.authorization.split(" ")[1];
-  console.log(token);
-  let decoded = jwt.verify(`${token}`, "bazam");
-  console.log("decoded >>>>", decoded);
-  if (token) {
-    Entity.getAllInCondo(decoded.condo_id, function(error, data) {
-      //si existe
-      if (typeof data !== "undefined") {
-        res.status(200).json(data);
-      } else {
-        res.status(404).json({ msg: "No hay registro en la base de datos" });
-      }
-    });
-  } else {
-    res.status(500).json({ msg: "No se recibio token" });
-  }
+  console.log(res.decodedToken)
+  Entity.getAllInCondo(res.decodedToken.condo_id, function(error, data) {
+    //si existe
+    if (typeof data !== "undefined") {
+      res.status(200).json(data);
+    } else {
+      res.status(404).json({ msg: "No hay registro en la base de datos" });
+    }
+  });
   /* res.status(200).json(decoded); */
 };
 

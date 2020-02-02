@@ -1,7 +1,7 @@
 let express = require("express");
 let router = express.Router();
 let controladores = require(".././controladores");
-let verifyToken = require("../shared/verifyToken")
+let verifyToken = require("../shared/verifyToken");
 let upload = require("../libs/image-upload");
 /* IMAGES*/
 router.post("/images/", controladores.images.add);
@@ -55,6 +55,7 @@ router.delete("/turns/:id", controladores.turns.delete);
 /* CAMBIO DE TURNO  */
 
 router.get("/shift_change/", controladores.shift_change.getAll);
+router.get("/shift_change/self/", controladores.shift_change.getAllInCondo);
 router.get("/shift_change/many/", controladores.shift_change.getAllInCondo);
 router.get("/shift_change/:id", controladores.shift_change.getOne);
 router.post("/shift_change/", controladores.shift_change.add);
@@ -67,7 +68,16 @@ router.delete("/shift_change/:id", controladores.shift_change.delete);
 
 /* RECEPCION DE PAQUETES*/
 
-router.get("/package_reception/",  verifyToken, controladores.package_reception.getAll);
+router.get(
+  "/package_reception/",
+  verifyToken,
+  controladores.package_reception.getAll
+);
+router.get(
+  "/package_reception/self/",
+  verifyToken,
+  controladores.package_reception.getAllInCondo
+);
 router.get("/package_reception/:id", controladores.package_reception.getOne);
 router.post("/package_reception/", controladores.package_reception.add);
 router.put("/package_reception/", controladores.package_reception.edit);

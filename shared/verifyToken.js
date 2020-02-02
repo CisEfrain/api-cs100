@@ -7,6 +7,7 @@ const verifyToken = function(req, res, next) {
     if (req.headers.authorization) {
       token = req.headers.authorization.split(" ")[1];
       decoded = jwt.verify(`${token}`, "bazam");
+      res.decodedToken = decoded;
       next();
     } else {
       throw { message: "token not recieved" };
