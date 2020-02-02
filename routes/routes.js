@@ -78,6 +78,11 @@ router.get(
   verifyToken,
   controladores.package_reception.getAllInCondo
 );
+router.get(
+  "/package_reception/me/",
+  verifyToken,
+  controladores.package_reception.getAllByUser
+);
 router.get("/package_reception/:id", controladores.package_reception.getOne);
 router.post("/package_reception/", controladores.package_reception.add);
 router.put("/package_reception/", controladores.package_reception.edit);

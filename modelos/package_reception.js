@@ -12,9 +12,13 @@ const edit = `UPDATE ${table} SET ? WHERE id = ?`;
 const insert = `INSERT INTO ${table} SET ?`;
 const eliminate = `DELETE FROM ${table} WHERE id = ?;`;
 const getAllByCondo = `
-SELECT  a.worker_id, a.shipping_company_id, a.addreesse, a.address,
+SELECT  a.id, a.worker_id, a.shipping_company_id, a.addreesse, a.address,
 a.delivered_date, a.created_at, a.updated_at, a.deleted_at 
 FROM  package_reception a LEFT JOIN workers b ON b.condos_id = ? GROUP BY a.id
+`;
+const getAllByUser = `
+SELECT a.id, a.worker_id, a.shipping_company_id, a.addreesse, a.address,
+a.delivered_date, a.created_at, a.updated_at, a.deleted_at FROM package_reception a JOIN watchers b ON b.workers_id= ? GROUP BY b.id
 `;
 //const getWatcher = `SELECT * FROM ${table} WHERE = ? `;
 Model.getAll = function(callback) {
@@ -43,6 +47,16 @@ Model.getAll = function(callback) {
 Model.getAllInCondo = function(id, callback) {
   console.log("el id >>>> ", id);
   Query.findAllInCondo(getAllByCondo, id)
+    .then(response => {
+      callback(undefined, response);
+    })
+    .catch(err => {
+      callback(err, undefined);
+    });
+};
+
+Model.getAllByUser = function(id, callback) {
+  Query.findOne(getAllByUser, id)
     .then(response => {
       callback(undefined, response);
     })

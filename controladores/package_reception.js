@@ -17,18 +17,20 @@ exports.getAll = function(req, res) {
     }
   });
 };
-exports.getOne = function(req, res) {
-  Entity.getOne(req.params.id, function(error, data) {
+exports.getAllByUser = function(req, res) {
+  console.log(res.decodedToken);
+  Entity.getAllByUser(res.decodedToken.user_id, function(error, data) {
     //si existe
-    if (typeof data !== "undefined" && data.length > 0) {
+    if (typeof data !== "undefined") {
       res.status(200).json(data);
     } else {
       res.status(404).json({ msg: "No hay registro en la base de datos" });
     }
   });
+  /* res.status(200).json(decoded); */
 };
 exports.getAllInCondo = function(req, res) {
-  console.log(res.decodedToken)
+  console.log(res.decodedToken);
   Entity.getAllInCondo(res.decodedToken.condo_id, function(error, data) {
     //si existe
     if (typeof data !== "undefined") {
@@ -38,6 +40,16 @@ exports.getAllInCondo = function(req, res) {
     }
   });
   /* res.status(200).json(decoded); */
+};
+exports.getOne = function(req, res) {
+  Entity.getOne(req.params.id, function(error, data) {
+    //si existe
+    if (typeof data !== "undefined" && data.length > 0) {
+      res.status(200).json(data);
+    } else {
+      res.status(404).json({ msg: "No hay registro en la base de datos" });
+    }
+  });
 };
 
 exports.add = function(req, res) {
