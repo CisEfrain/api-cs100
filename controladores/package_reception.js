@@ -42,7 +42,8 @@ exports.getAllInCondo = function(req, res) {
   /* res.status(200).json(decoded); */
 };
 exports.getOne = function(req, res) {
-  Entity.getOne(req.params.id, function(error, data) {
+ 
+  Entity.getOne(parseFloat(req.params.id), function(error, data) {
     //si existe
     if (typeof data !== "undefined" && data.length > 0) {
       res.status(200).json(data);
