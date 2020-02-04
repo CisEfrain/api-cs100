@@ -101,7 +101,19 @@ exports.edit = function(req, res) {
     }
   });
 };
-
+exports.editOne = function(req, res) {
+  let body = req.body.comment;
+  let id = req.params.id;
+  Entity.editOne(body, id, function(error, data) {
+    //si existe
+    //console.log(data)
+    if (typeof data !== "undefined") {
+      res.status(200).json({ msg: "datos actualizados" });
+    } else {
+      res.status(404).json({ msg: "No hay registro en la base de datos" });
+    }
+  });
+};
 exports.delete = function(req, res) {
   let id = req.params.id;
   Entity.delete(id, function(error, data) {

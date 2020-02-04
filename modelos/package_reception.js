@@ -8,6 +8,8 @@ const get = `SELECT * FROM ${table} `;
 const getAllInCondo = `SELECT * FROM ${table}  WHERE checked_by = 0 AND condo_id = ?`;
 const getOne = `SELECT * FROM ${table} WHERE id = ?`;
 const edit = `UPDATE ${table} SET ? WHERE id = ?`;
+
+const deliverItem = `UPDATE ${table} SET comment=?,delivered_date=? WHERE id=?`;
 //const getOne = `SELECT * FROM ${table} WHERE ? ${field} = ?`;
 const insert = `INSERT INTO ${table} SET ?`;
 const eliminate = `DELETE FROM ${table} WHERE id = ?;`;
@@ -20,6 +22,7 @@ const getAllByUser = `
 SELECT a.id, a.worker_id, a.shipping_company_id, a.addreesse, a.address,
 a.delivered_date, a.created_at, a.updated_at, a.deleted_at FROM package_reception a JOIN watchers b ON b.workers_id= ? GROUP BY a.id
 `;
+
 //const getWatcher = `SELECT * FROM ${table} WHERE = ? `;
 Model.getAll = function(callback) {
   Query.find(get)
@@ -98,12 +101,25 @@ Model.add = async function(data, callback) {
       callback(err, undefined);
     });
 };
+
 Model.edit = function(data, id, callback) {
   Query.update(edit, data, id)
     .then(response => {
       callback(undefined, { msg: response });
     })
     .catch(err => {
+      callback(err, undefined);
+    });
+};
+
+Model.editOne = function(value, id, callback) {
+  Query.updateOne(deliverItem, value, id)
+    .then(response => {
+      //console.log(response)
+      callback(undefined, { msg: response });
+    })
+    .catch(err => {
+      console.log(err);
       callback(err, undefined);
     });
 };

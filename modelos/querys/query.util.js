@@ -1,4 +1,9 @@
 const DB = require("../db");
+var mysql = require("mysql");
+const moment = require("moment");
+moment.prototype.toMySqlDateTime = function() {
+  return this.format("YYYY-MM-DD HH:mm:ss");
+};
 
 exports.find = async function(query) {
   return await new Promise((resolve, reject) => {
@@ -76,6 +81,25 @@ exports.update = async function(query, body, id) {
   });
 };
 
+exports.updateOne = async function(query, value, id) {
+  return await new Promise((resolve, reject) => {
+    DB.getConnection(function(err, connection) {
+      if (err) reject(err);
+
+      let sql = connection.format(query, [
+        value,
+        moment(Date.now()).toMySqlDateTime(),
+        id
+      ]);
+      console.log("sql 1 >>> ", sql);
+      connection.query(sql, function(err, result) {
+        console.log(this.sql);
+        connection.release();
+        return err ? reject(err) : resolve(result);
+      });
+    });
+  });
+};
 exports.remove = async function(query, find) {
   return await new Promise((resolve, reject) => {
     DB.getConnection(function(err, connection) {
