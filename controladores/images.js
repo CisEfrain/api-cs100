@@ -55,15 +55,23 @@ exports.add = function(req, res) {
   /* console.log("add image >>>", req.files);
   console.log("add image2  >>>", req.file);
   console.log("add image >>>", req.body); */
+  console.log('req files >>>> ', req.file)
   upload.single("image")(req, {}, function(err) {
     if (err) throw err;
     /*     console.log(req) */
-    /*   console.log(req.body); */
+    let body = req.body;
+    let params = req.params
+    console.log(body);
     let data = req.file;
     /* res.status(200).json(parsed); */
     console.log("image>>>> ", data);
-    res.status(200).json(data)
-/*     Entity.addMany(parsed, function(error, data) {
+    res.status(200).json({
+      data,
+      body,
+      params
+    });
+    
+    /*     Entity.addMany(parsed, function(error, data) {
       //si existe
       if (typeof data !== "undefined") {
         res.status(200).json(data);

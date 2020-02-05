@@ -84,9 +84,11 @@ router.get(
   verifyToken,
   controladores.package_reception.getAllByUser
 );
+
 router.get("/package_reception/:id", controladores.package_reception.getOne);
 router.post("/package_reception/", controladores.package_reception.add);
 router.put("/package_reception/", controladores.package_reception.edit);
 router.put("/package_reception/deliver/:id", controladores.package_reception.editOne);
+router.put("/package_reception/deliver-with-file/:id", controladores.package_reception.editOneWithImage);
 router.delete("/package_reception/:id", controladores.package_reception.delete);
 module.exports = router;

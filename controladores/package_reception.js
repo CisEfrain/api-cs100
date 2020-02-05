@@ -1,4 +1,5 @@
 let Entity = require("../modelos/package_reception");
+let upload = require("../libs/image-upload");
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
 /* moment.prototype.toMySqlDateTime = function () {
@@ -42,7 +43,6 @@ exports.getAllInCondo = function(req, res) {
   /* res.status(200).json(decoded); */
 };
 exports.getOne = function(req, res) {
- 
   Entity.getOne(parseFloat(req.params.id), function(error, data) {
     //si existe
     if (typeof data !== "undefined" && data.length > 0) {
@@ -103,7 +103,7 @@ exports.edit = function(req, res) {
 };
 exports.editOne = function(req, res) {
   let body = req.body.comment;
-  console.log(body)
+  console.log(body);
   let id = req.params.id;
   Entity.editOne(body, id, function(error, data) {
     //si existe
@@ -115,6 +115,30 @@ exports.editOne = function(req, res) {
     }
   });
 };
+exports.editOneWithImage = function(req, res) {
+  let body = {};
+  let id = req.params.id;
+
+  upload.single("image")(req, {}, function(err) {
+    if (!id || !req.body.comment || !req.file) {
+      res.status(404).json({ msg: "Eror en los datos" });
+    }
+    if (err) throw err;
+    body.comment = req.body.comment;
+    body.image = req.file;
+    console.log("image>>>> ", body);
+    Entity.editOneWithImage(body, id, function(error, data) {
+      //si existe
+      //console.log(data)
+      if (typeof data !== "undefined") {
+        res.status(200).json({ msg: "datos actualizados" });
+      } else {
+        res.status(404).json({ msg: "No hay registro en la base de datos" });
+      }
+    });
+  });
+};
+
 exports.delete = function(req, res) {
   let id = req.params.id;
   Entity.delete(id, function(error, data) {

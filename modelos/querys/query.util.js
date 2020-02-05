@@ -100,6 +100,34 @@ exports.updateOne = async function(query, value, id) {
     });
   });
 };
+
+exports.updateOneWithImage = async function(
+  query,
+  comment,
+  filename,
+  mimetype,
+  id
+) {
+  return await new Promise((resolve, reject) => {
+    DB.getConnection(function(err, connection) {
+      if (err) reject(err);
+
+      let sql = connection.format(query, [
+        comment,
+        moment(Date.now()).toMySqlDateTime(),
+        filename,
+        mimetype,
+        id
+      ]);
+      console.log("sql 1 >>> ", sql);
+      connection.query(sql, function(err, result) {
+        console.log(this.sql);
+        connection.release();
+        return err ? reject(err) : resolve(result);
+      });
+    });
+  });
+};
 exports.remove = async function(query, find) {
   return await new Promise((resolve, reject) => {
     DB.getConnection(function(err, connection) {

@@ -10,6 +10,7 @@ const getOne = `SELECT * FROM ${table} WHERE id = ?`;
 const edit = `UPDATE ${table} SET ? WHERE id = ?`;
 
 const deliverItem = `UPDATE ${table} SET comment=?,delivered_date=? WHERE id=?`;
+const deliverItemWithImage = `UPDATE ${table} SET comment=?,delivered_date=?, image_uuid=?,image_mime=? WHERE id=?`;
 //const getOne = `SELECT * FROM ${table} WHERE ? ${field} = ?`;
 const insert = `INSERT INTO ${table} SET ?`;
 const eliminate = `DELETE FROM ${table} WHERE id = ?;`;
@@ -114,6 +115,24 @@ Model.edit = function(data, id, callback) {
 
 Model.editOne = function(value, id, callback) {
   Query.updateOne(deliverItem, value, id)
+    .then(response => {
+      //console.log(response)
+      callback(undefined, { msg: response });
+    })
+    .catch(err => {
+      console.log(err);
+      callback(err, undefined);
+    });
+};
+Model.editOneWithImage = function(body, id, callback) {
+  console.log(body)
+  Query.updateOneWithImage(
+    deliverItemWithImage,
+    body.comment,
+    body.image.filename,
+    body.image.mimetype,
+    id
+  )
     .then(response => {
       //console.log(response)
       callback(undefined, { msg: response });
