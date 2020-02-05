@@ -4,6 +4,8 @@ ehthumbs.db
 ehthumbs_vista.db
 config
 /config
+/uploads
+uploads
 # Folder config file
 Desktop.ini
 /uploads
