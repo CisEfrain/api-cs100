@@ -6,7 +6,8 @@ config
 /config
 # Folder config file
 Desktop.ini
-
+/uploads
+uploads
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
