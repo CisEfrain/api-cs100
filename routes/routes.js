@@ -2,7 +2,6 @@ let express = require("express");
 let router = express.Router();
 let controladores = require(".././controladores");
 let verifyToken = require("../shared/verifyToken");
-let upload = require("../libs/image-upload");
 /* IMAGES*/
 router.post("/images/", controladores.images.addArray);
 router.post("/image/", controladores.images.add)
@@ -17,7 +16,7 @@ router.get("/watchers/", controladores.usuarios.getw);
 /* ASISTENCIAS */
 router.post("/asistencias/cerrar/", controladores.asistencias.cerrarJornada);
 /* RESIDENTES*/
-router.post("/residentes/importar/", controladores.residentes.importarCsv);
+router.post("/residentes/importar/",verifyToken, controladores.residentes.importarCsv);
 
 /* COMPAÑIAS DE TRANSPORTE */
 
