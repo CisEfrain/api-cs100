@@ -23,7 +23,8 @@ module.exports = residents = {
       "committee",
       "rut",
       "departament",
-      "condos_id"
+      "condos_id",
+      "approved"
     ];
 
     fields.map((e, i) => {
@@ -39,6 +40,9 @@ module.exports = residents = {
             break;
           case 7:
             isVerified[ind].splice(7, 0, condos_id);
+            break;
+          case 8:
+            isVerified[ind].splice(8,0,1)
           default:
             break;
         }

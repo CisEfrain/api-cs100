@@ -35,15 +35,20 @@ exports.importarCsv = async function(req, res) {
   const isVerifyFiltered = isVerified.filter(e => e.length > 1);
 
   /* IMPORT NEW RESIDENTS */
-  await residents.importResidents(
-    isVerifyFiltered,
-    condos_id,
-    (error, response) => {
-      response
-        ? res.status(200).json({ msg: "success", response })
-        : res.status(400).json({ msg: error, error });
-    }
-  );
+  if (isVerifyFiltered.length === 0) {
+    const allInDB = new Error('All users on DB')
+    return res.status(400).json(allInDB)
+  } else {
+    await residents.importResidents(
+      isVerifyFiltered,
+      condos_id,
+      (error, response) => {
+        response
+          ? res.status(200).json({ msg: "success", response })
+          : res.status(400).json({ msg: error, error });
+      }
+    );
+  }
 };
 
 // exports.importarCsv = async function(req, res) {
