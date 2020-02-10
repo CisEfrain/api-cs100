@@ -5,11 +5,16 @@ const residents = require("../modelos/residentes");
 
 exports.importarCsv = async function(req, res) {
   const { body } = req;
-  const condos_id = req.header("condos_id");
+  !res.decodedToken.condo_id &&
+    res.status(400).json({
+      msg: "condo id not found"
+    });
+  const condos_id = res.decodedToken.condo_id;
 
   /* .CVS FILE HAS NOT BEEN SENDED */
+
   !body &&
-    res.status(500).json({
+    res.status(400).json({
       msg: "Data do not exist"
     });
 
@@ -29,18 +34,21 @@ exports.importarCsv = async function(req, res) {
   /* REMOVE EMPTY ARRAYS IF EXIST  */
   const isVerifyFiltered = isVerified.filter(e => e.length > 1);
 
-
-
   /* IMPORT NEW RESIDENTS */
-  await residents.importResidents(
-    isVerifyFiltered,
-    condos_id,
-    (error, response) => {
-      response
-      ? res.status(200).json({msg:'success',response})
-      : res.status(400).json({msg:error, error})
-    }
-  );
+  if (isVerifyFiltered.length === 0) {
+    const allInDB = new Error('All users on DB')
+    return res.status(400).json(allInDB)
+  } else {
+    await residents.importResidents(
+      isVerifyFiltered,
+      condos_id,
+      (error, response) => {
+        response
+          ? res.status(200).json({ msg: "success", response })
+          : res.status(400).json({ msg: error, error });
+      }
+    );
+  }
 };
 
 // exports.importarCsv = async function(req, res) {
