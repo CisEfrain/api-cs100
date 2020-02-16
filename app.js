@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 console.log(__dirname + "/uploads/images/");
 
 //app.use('/files',express.static(path.join(__dirname, 'uploads/images')));
-app.use("*/files", express.static("uploads/images"));
+app.use("*/v3/files", express.static("uploads/images"));
 
 //app.use(__dirname + '/uploads/images', express.static('files'));
 

@@ -58,6 +58,7 @@ router.get("/shift_change/", controladores.shift_change.getAll);
 router.get("/shift_change/self/", controladores.shift_change.getAllInCondo);
 router.get("/shift_change/many/", controladores.shift_change.getAllInCondo);
 router.get("/shift_change/:id", controladores.shift_change.getOne);
+router.get("/shift_change/events/:id", controladores.shift_change.getOneByChecksId);
 router.post("/shift_change/", controladores.shift_change.add);
 router.put("/shift_change/", controladores.shift_change.edit);
 router.put(

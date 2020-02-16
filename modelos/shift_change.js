@@ -7,6 +7,7 @@ const table = "shift_change";
 const get = `SELECT * FROM ${table} `;
 const getAllInCondo = `SELECT * FROM ${table}  WHERE checked_by = 0 AND condo_id = ?`;
 const getOne = `SELECT * FROM ${table} WHERE id = ?`;
+const getOneByChecksId = `SELECT * FROM  ${table} WHERE checks_id = ?`
 const edit = `UPDATE ${table} SET ? WHERE id = ?`;
 //const getOne = `SELECT * FROM ${table} WHERE ? ${field} = ?`;
 const insert = `INSERT INTO ${table} SET ?`;
@@ -34,7 +35,19 @@ Model.getAllInCondo = function(id, callback) {
 };
 
 Model.getOne = async function(id, callback) {
-  findOne(getOne, id)
+  Query.findOne(getOne, id)
+    .then(response => {
+      console.log("response >>>>". response)
+      callback(undefined, response);
+    })
+    .catch(err => {
+      console.error("error >>>, ", err)
+      callback(err, undefined);
+    });
+};
+
+Model.getOneByChecksId = async function(id, callback) {
+  Query.findOne(getOneByChecksId, id)
     .then(response => {
       callback(undefined, response);
     })
@@ -42,7 +55,6 @@ Model.getOne = async function(id, callback) {
       callback(err, undefined);
     });
 };
-
 Model.add = async function(data, callback) {
   let fields = ["worker_id", "turn_id", "condo_id"];
   console.log("model data add >>>>>", data);
