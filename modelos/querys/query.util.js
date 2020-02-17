@@ -40,6 +40,7 @@ exports.findOne = async function(query, find) {
   return await new Promise((resolve, reject) => {
     DB.getConnection(function(err, connection) {
       connection.query(query, find, function(err, result) {
+        console.log(this.sql)
         connection.release();
         return err ? reject(err) : resolve(result);
       });
