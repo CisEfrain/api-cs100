@@ -128,6 +128,29 @@ exports.updateOneWithImage = async function(
     });
   });
 };
+exports.updateAndReceiveOneWithImage = async function(
+  query,
+  filename,
+  mimetype,
+  id
+) {
+  return await new Promise((resolve, reject) => {
+    DB.getConnection(function(err, connection) {
+      if (err) reject(err);
+
+      let sql = connection.format(query, [
+        moment(Date.now()).toMySqlDateTime(),
+        filename,
+        mimetype,
+        id
+      ]);
+      connection.query(sql, function(err, result) {
+        connection.release();
+        return err ? reject(err) : resolve(result);
+      });
+    });
+  });
+};
 exports.remove = async function(query, find) {
   return await new Promise((resolve, reject) => {
     DB.getConnection(function(err, connection) {
