@@ -14,9 +14,12 @@ const deliverItemWithImage = `UPDATE ${table} SET comment=?,delivered_date=?, im
 //const getOne = `SELECT * FROM ${table} WHERE ? ${field} = ?`;
 const insert = `INSERT INTO ${table} SET ?`;
 const eliminate = `DELETE FROM ${table} WHERE id = ?;`;
-const getAllByCondo = `
+/* const getAllByCondo = `
 SELECT a.* 
 FROM  package_reception a LEFT JOIN workers b ON b.condos_id = ? GROUP BY a.id
+`; */
+const getAllByCondo = `
+SELECT a.* FROM  package_reception a LEFT JOIN workers b ON b.id = a.worker_id WHERE b.condos_id = ?GROUP BY a.id
 `;
 /* const getAllByUser = `
 SELECT a.id, a.worker_id, a.shipping_company_id, a.addreesse, a.address,
@@ -24,7 +27,7 @@ a.delivered_date, a.created_at, a.updated_at, a.deleted_at FROM package_receptio
 `;
  */
 const getAllByUser = `
-SELECT a.* FROM package_reception a JOIN watchers b ON b.workers_id= ? GROUP BY a.id
+SELECT a.* FROM package_reception a JOIN watchers b ON b.workers_id= a.worker_id WHERE b.id=? GROUP BY a.id
 `;
 //const getWatcher = `SELECT * FROM ${table} WHERE = ? `;
 Model.getAll = function(callback) {
