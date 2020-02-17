@@ -4,7 +4,7 @@ let controladores = require(".././controladores");
 let verifyToken = require("../shared/verifyToken");
 /* IMAGES*/
 router.post("/images/", controladores.images.addArray);
-router.post("/image/", controladores.images.add)
+router.post("/image/", controladores.images.add);
 
 /* TAREAS */
 router.get("/tareas/:worker", controladores.tareas.getTrabajador);
@@ -16,7 +16,11 @@ router.get("/watchers/", controladores.usuarios.getw);
 /* ASISTENCIAS */
 router.post("/asistencias/cerrar/", controladores.asistencias.cerrarJornada);
 /* RESIDENTES*/
-router.post("/residentes/importar/",verifyToken, controladores.residentes.importarCsv);
+router.post(
+  "/residentes/importar/",
+  verifyToken,
+  controladores.residentes.importarCsv
+);
 
 /* COMPAÑIAS DE TRANSPORTE */
 
@@ -58,6 +62,10 @@ router.get("/shift_change/", controladores.shift_change.getAll);
 router.get("/shift_change/self/", controladores.shift_change.getAllInCondo);
 router.get("/shift_change/many/", controladores.shift_change.getAllInCondo);
 router.get("/shift_change/:id", controladores.shift_change.getOne);
+router.get(
+  "/shift_change/events/:id",
+  controladores.shift_change.getOneByChecksId
+);
 router.post("/shift_change/", controladores.shift_change.add);
 router.put("/shift_change/", controladores.shift_change.edit);
 router.put(
@@ -87,7 +95,17 @@ router.get(
 router.get("/package_reception/:id", controladores.package_reception.getOne);
 router.post("/package_reception/", controladores.package_reception.add);
 router.put("/package_reception/", controladores.package_reception.edit);
-router.put("/package_reception/deliver/:id", controladores.package_reception.editOne);
-router.put("/package_reception/deliver-with-file/:id", controladores.package_reception.editOneWithImage);
+router.put(
+  "/package_reception/deliver/:id",
+  controladores.package_reception.editOne
+);
+router.put(
+  "/package_reception/deliver-with-file/:id",
+  controladores.package_reception.editOneWithImage
+);
+router.put(
+  "/package_reception/receive/:id",
+  controladores.package_reception.receive
+);
 router.delete("/package_reception/:id", controladores.package_reception.delete);
 module.exports = router;

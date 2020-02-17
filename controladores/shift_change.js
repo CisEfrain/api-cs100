@@ -1,4 +1,5 @@
 let Entity = require("../modelos/shift_change");
+let EventsEntity = require("../modelos/events");
 const jwt = require("jsonwebtoken");
 exports.getAll = function(req, res) {
   Entity.getAll(function(error, data) {
@@ -17,6 +18,33 @@ exports.getOne = function(req, res) {
       res.status(200).json(data);
     } else {
       res.status(404).json({ msg: "No hay registro en la base de datos" });
+    }
+  });
+};
+
+exports.getOneByChecksId = function(req, res) {
+  Entity.getOneByChecksId(req.params.id, function(error, data) {
+    //si existe
+    if (typeof data !== "undefined" && data.length > 0) {
+      console.log(data);
+      // res.status(200).json(data);
+      EventsEntity.getManyById(data[0].id, function(error, data) {
+        if (typeof data !== "undefined" && data.length > 0) {
+          console.log(data);
+          res.status(200).json(data);
+        } else {
+          res
+            .status(404)
+            .json({ msg: "No hay registro de eventos en la base de datos" });
+        }
+      });
+    } else {
+      res
+        .status(404)
+        .json({
+          msg:
+            "No hay registro de eventos para este cambio de turno en la base de datos"
+        });
     }
   });
 };

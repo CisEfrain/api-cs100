@@ -138,7 +138,28 @@ exports.editOneWithImage = function(req, res) {
     });
   });
 };
+exports.receive = function(req, res) {
+  let body = {};
+  let id = req.params.id;
 
+  upload.single("image")(req, {}, function(err) {
+    if (!id || !req.file) {
+      res.status(404).json({ msg: "Eror en los datos" });
+    }
+    if (err) throw err;
+    body.image = req.file;
+    console.log("image >>>> ", req.file);
+    Entity.receive(body, id, function(error, data) {
+      //si existe
+      //console.log(data)
+      if (typeof data !== "undefined") {
+        res.status(200).json({ msg: "datos actualizados" });
+      } else {
+        res.status(404).json({ msg: "No hay registro en la base de datos" });
+      }
+    });
+  });
+};
 exports.delete = function(req, res) {
   let id = req.params.id;
   Entity.delete(id, function(error, data) {
