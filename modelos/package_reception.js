@@ -119,6 +119,7 @@ Model.edit = function(data, id, callback) {
 };
 
 Model.editOne = function(value, id, callback) {
+//este metodo se utiliza para entregar el paquete
   Query.updateOne(deliverItem, value, id)
     .then(response => {
       //console.log(response)
@@ -129,7 +130,9 @@ Model.editOne = function(value, id, callback) {
       callback(err, undefined);
     });
 };
+
 Model.editOneWithImage = function(body, id, callback) {
+//este metodo se utiliza para entregar el paquete
   console.log(body);
   Query.updateOneWithImage(
     deliverItemWithImage,
