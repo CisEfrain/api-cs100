@@ -2,6 +2,10 @@ let express = require("express");
 let router = express.Router();
 let controladores = require(".././controladores");
 let verifyToken = require("../shared/verifyToken");
+
+/*emails*/
+router.post("/request-password/", controladores.mailer.sendEmail);
+
 /* IMAGES*/
 router.post("/images/", controladores.images.addArray);
 router.post("/image/", controladores.images.add);
