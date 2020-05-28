@@ -11,9 +11,11 @@ exports.sendEmail = function (req, res) {
     let user_type = '';
     let { email, username, type } = req.body
     if (type == "watcher") {
-        user_type = "Vigilante"
-    } else {
+        user_type = "Trabajador"
+    } else if (type == "resident") {
         user_type = "Residente"
+    } else {
+        res.status(400).send("no se recibio un tipo")
     }
     html = `
         <h1> Se ha solicitado un cambio de contraseña para el siguiente usuario </h1>
@@ -39,7 +41,6 @@ exports.sendEmail = function (req, res) {
         console.log
     }).catch(e => {
         res.send(e)
-        return
     })
     //console.log("Message sent: %s", info);
     // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
@@ -47,6 +48,5 @@ exports.sendEmail = function (req, res) {
     // Preview only available when sending through an Ethereal account
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
     res.send("listo")
-    return
 }
 
