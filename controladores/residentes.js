@@ -33,10 +33,10 @@ exports.importarCsv = async function(req, res) {
 
   /* REMOVE EMPTY ARRAYS IF EXIST  */
   const isVerifyFiltered = isVerified.filter(e => e.length > 1);
-
+  console.log(   isVerifyFiltered)
   /* IMPORT NEW RESIDENTS */
   if (isVerifyFiltered.length === 0) {
-    const allInDB = new Error('All users on DB')
+    const allInDB = 'All users on DB'
     return res.status(400).json(allInDB)
   } else {
     await residents.importResidents(

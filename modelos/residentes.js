@@ -9,7 +9,7 @@ module.exports = residents = {
 
     const parsedEmails = data.join("','");
     const getEmails = `SELECT id,email FROM ${table} WHERE email IN ('${parsedEmails}') ORDER BY id desc`;
-    
+
     const emailsInDB = await Query.findMany(getEmails);
     emailsInDB ? cb(undefined, emailsInDB) : cb(error, undefined);
   },
@@ -23,11 +23,11 @@ module.exports = residents = {
       "committee",
       "rut",
       "departament",
+      "percentage",
       "condos_id",
       "approved",
-      "percentage"
     ];
-
+    console.log(isVerified)
     fields.map((e, i) => {
       isVerified.map((el, ind) => {
         switch (i) {
@@ -39,20 +39,25 @@ module.exports = residents = {
               ? isVerified[ind].splice(4, 1, 1)
               : isVerified[ind].splice(4, 1, 0);
             break;
-          case 7:
-            isVerified[ind].splice(7, 0, condos_id);
-            break;
           case 8:
-            isVerified[ind].splice(8,0,1)
+            isVerified[ind].splice(8, 0, condos_id)
+            break;
+          case 9:
+            isVerified[ind].splice(9, 0, 1)
+            break;
           default:
             break;
         }
       });
     });
-   
-    const fieldsToFill = fields.join(",");
-    const insertResidents = `INSERT INTO residents(${fieldsToFill})VALUES ?`;
 
+    const fieldsToFill = fields.join(",");
+    console.log("fieldsToFill", fieldsToFill)
+    console.log("2", isVerified)
+    
+
+    const insertResidents = `INSERT INTO residents(${fieldsToFill})VALUES ?`;
+    console.log("2", insertResidents)
     const residentsImported = await Query.saveMany(insertResidents, isVerified);
 
     residentsImported
