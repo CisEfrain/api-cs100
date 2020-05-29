@@ -24,7 +24,8 @@ module.exports = residents = {
       "rut",
       "departament",
       "condos_id",
-      "approved"
+      "approved",
+      "percentage"
     ];
 
     fields.map((e, i) => {
