@@ -1,14 +1,14 @@
 const DB = require("../db");
 var mysql = require("mysql");
 const moment = require("moment");
-moment.prototype.toMySqlDateTime = function() {
+moment.prototype.toMySqlDateTime = function () {
   return this.format("YYYY-MM-DD HH:mm:ss");
 };
 
-exports.find = async function(query) {
+exports.find = async function (query) {
   return await new Promise((resolve, reject) => {
-    DB.getConnection(function(err, connection) {
-      connection.query(query, function(err, result) {
+    DB.getConnection(function (err, connection) {
+      connection.query(query, function (err, result) {
         connection.release();
         return err ? reject(err) : resolve(result);
       });
@@ -16,41 +16,40 @@ exports.find = async function(query) {
   });
 };
 
-exports.findAllInCondo = async function(query, id) {
+exports.findAllInCondo = async function (query, id) {
   return await new Promise((resolve, reject) => {
-    DB.getConnection(function(err, connection) {
-      connection.query(query, id, function(err, result) {
+    DB.getConnection(function (err, connection) {
+      connection.query(query, id, function (err, result) {
         connection.release();
         return err ? reject(err) : resolve(result);
       });
     });
   });
 };
-exports.findMany = async function(query) {
+exports.findMany = async function (query) {
   return await new Promise((resolve, reject) => {
-    DB.getConnection(function(err, connection) {
-      connection.query(query, function(err, result) {
+    DB.getConnection(function (err, connection) {
+      connection.query(query, function (err, result) {
         connection.release();
         return err ? reject(err) : resolve(result);
       });
     });
   });
 };
-exports.findOne = async function(query, find) {
+exports.findOne = async function (query, find) {
   return await new Promise((resolve, reject) => {
-    DB.getConnection(function(err, connection) {
-      connection.query(query, find, function(err, result) {
-        console.log(this.sql)
+    DB.getConnection(function (err, connection) {
+      connection.query(query, find, function (err, result) {
         connection.release();
         return err ? reject(err) : resolve(result);
       });
     });
   });
 };
-exports.save = async function(query, data) {
+exports.save = async function (query, data) {
   return await new Promise((resolve, reject) => {
-    DB.getConnection(function(err, connection) {
-      connection.query(query, data, function(err, result) {
+    DB.getConnection(function (err, connection) {
+      connection.query(query, data, function (err, result) {
         connection.release();
         return err ? reject(err) : resolve(result);
       });
@@ -58,23 +57,23 @@ exports.save = async function(query, data) {
   });
 };
 
-exports.saveMany = async function(query, data) {
+exports.saveMany = async function (query, data) {
   //data is array of string ['val1', 'val2', 'val3']
   // use Object.values(Obj) to convert object to array
   return await new Promise((resolve, reject) => {
-    DB.getConnection(function(err, connection) {
-      connection.query(query, [data], function(err, result) {
+    DB.getConnection(function (err, connection) {
+      connection.query(query, [data], function (err, result) {
         connection.release();
         return err ? reject(err) : resolve(result);
       });
     });
   });
 };
-exports.update = async function(query, body, id) {
+exports.update = async function (query, body, id) {
   return await new Promise((resolve, reject) => {
-    DB.getConnection(function(err, connection) {
+    DB.getConnection(function (err, connection) {
       if (err) reject(err);
-      connection.query(query, [body, id], function(err, result) {
+      connection.query(query, [body, id], function (err, result) {
         connection.release();
         return err ? reject(err) : resolve(result);
       });
@@ -82,9 +81,9 @@ exports.update = async function(query, body, id) {
   });
 };
 
-exports.updateOne = async function(query, value, id) {
+exports.updateOne = async function (query, value, id) {
   return await new Promise((resolve, reject) => {
-    DB.getConnection(function(err, connection) {
+    DB.getConnection(function (err, connection) {
       if (err) reject(err);
 
       let sql = connection.format(query, [
@@ -92,9 +91,8 @@ exports.updateOne = async function(query, value, id) {
         moment(Date.now()).toMySqlDateTime(),
         id
       ]);
-      console.log("sql 1 >>> ", sql);
-      connection.query(sql, function(err, result) {
-        console.log(this.sql);
+
+      connection.query(sql, function (err, result) {
         connection.release();
         return err ? reject(err) : resolve(result);
       });
@@ -102,7 +100,7 @@ exports.updateOne = async function(query, value, id) {
   });
 };
 
-exports.updateOneWithImage = async function(
+exports.updateOneWithImage = async function (
   query,
   comment,
   filename,
@@ -110,7 +108,7 @@ exports.updateOneWithImage = async function(
   id
 ) {
   return await new Promise((resolve, reject) => {
-    DB.getConnection(function(err, connection) {
+    DB.getConnection(function (err, connection) {
       if (err) reject(err);
 
       let sql = connection.format(query, [
@@ -120,23 +118,23 @@ exports.updateOneWithImage = async function(
         mimetype,
         id
       ]);
-      console.log("sql 1 >>> ", sql);
-      connection.query(sql, function(err, result) {
-        console.log(this.sql);
+
+      connection.query(sql, function (err, result) {
+
         connection.release();
         return err ? reject(err) : resolve(result);
       });
     });
   });
 };
-exports.updateAndReceiveOneWithImage = async function(
+exports.updateAndReceiveOneWithImage = async function (
   query,
   filename,
   mimetype,
   id
 ) {
   return await new Promise((resolve, reject) => {
-    DB.getConnection(function(err, connection) {
+    DB.getConnection(function (err, connection) {
       if (err) reject(err);
 
       let sql = connection.format(query, [
@@ -145,17 +143,17 @@ exports.updateAndReceiveOneWithImage = async function(
         mimetype,
         id
       ]);
-      connection.query(sql, function(err, result) {
+      connection.query(sql, function (err, result) {
         connection.release();
         return err ? reject(err) : resolve(result);
       });
     });
   });
 };
-exports.remove = async function(query, find) {
+exports.remove = async function (query, find) {
   return await new Promise((resolve, reject) => {
-    DB.getConnection(function(err, connection) {
-      connection.query(query, find, function(err, result) {
+    DB.getConnection(function (err, connection) {
+      connection.query(query, find, function (err, result) {
         connection.release();
         return err ? reject(err) : resolve(result);
       });

@@ -27,7 +27,6 @@ module.exports = residents = {
       "condos_id",
       "approved",
     ];
-    console.log(isVerified)
     fields.map((e, i) => {
       isVerified.map((el, ind) => {
         switch (i) {
@@ -39,11 +38,13 @@ module.exports = residents = {
               ? isVerified[ind].splice(4, 1, 1)
               : isVerified[ind].splice(4, 1, 0);
             break;
-            case 7:
-              isVerified[ind] = parseFloat(isVerified[ind]).toFixed(2)
-              break;
+          case 7:
+            if (isVerified[ind][7].length > 5) {
+              isVerified.splice([ind], 1)
+            }
+            break;
           case 8:
-            isVerified[ind].splice(8, 0, condos_id)
+            isVerified[ind].splice(8, 0, parseInt(condos_id))
             break;
           case 9:
             isVerified[ind].splice(9, 0, 1)
@@ -55,65 +56,21 @@ module.exports = residents = {
     });
 
     const fieldsToFill = fields.join(",");
-    console.log("fieldsToFill", fieldsToFill)
-    console.log("2", isVerified)
-    
+    /*    console.log("fieldsToFill", fieldsToFill)
+       console.log("2", isVerified) */
+
 
     const insertResidents = `INSERT INTO residents(${fieldsToFill})VALUES ?`;
     console.log("2", insertResidents)
-    const residentsImported = await Query.saveMany(insertResidents, isVerified);
-
-    residentsImported
-      ? cb(undefined, { data: residentsImported })
-      : cb(error, undefined);
+    await Query.saveMany(insertResidents, isVerified)
+      .then(res => {
+        console.log("residents imported", res)
+        cb(undefined, { data: res })
+      })
+      .catch(err => {
+        console.log("residents imported err", err)
+        cb(err, undefined);
+      }
+      )
   }
 };
-
-//1.name, 2.email, 3.pass, 4.phone, 5.committee, 6.rut, 7.departament, 8.condos_id
-
-// var insertarResidente = `INSERT INTO ${table} SET ?`;
-// var obtenerResidentePorCorreo;
-// residentes.verificar = function(data, callback) {
-//   if (!data) throw Error("sin datos para consulta");
-//   obtenerResidentePorCorreo = `SELECT id,email FROM ${table} WHERE email IN ('${data.join(
-//     "','"
-//   )}') ORDER BY id desc`;
-//   DB.getConnection(function(err, connection) {
-//     connection.query(obtenerResidentePorCorreo, function(err, rows) {
-//       if (err) throw err;
-//       else callback(null, rows);
-//       connection.release();
-//     });
-//   });
-//   /*   callback(null,  obtenerResidentePorCorreo ); */
-// };
-
-// residentes.importar = function(filtrados, condos_id, callback) {
-//   var values = filtrados.map(el => {
-//     return `('${el.nombre ? el.nombre : "vacio"}','${
-//       el.email ? el.email : "vacio"
-//     }','25f9e794323b453885f5181f1b624d0b',${
-//       el.telefono ? el.telefono : "vacio"
-//     },${el.comite && el.comite == "si" ? 1 : 0},${el.rut ? el.rut : "vacio"},${
-//       el.departamento ? el.departamento : "vacio"
-//     },${condos_id},1)`;
-//   });
-
-//   var consulta = `INSERT INTO residents(name,email,password,phone,committee,rut, departament,condos_id,approved) VALUES ${values.join(
-//     ","
-//   )}`;
-//   console.log("consulta >>>>> ", consulta);
-
-//   DB.getConnection(function(err, connection) {
-//     connection.query(consulta, function(err, rows) {
-//       if (err) callback(null, err);
-//       else callback(null, rows);
-//       connection.release();
-//     });
-//   });
-
-//   /*   err = false;
-//   if (err) throw err;
-//   else callback(null, consulta); */
-// };
-//module.exports = residentes;
