@@ -39,6 +39,9 @@ module.exports = residents = {
               ? isVerified[ind].splice(4, 1, 1)
               : isVerified[ind].splice(4, 1, 0);
             break;
+            case 7:
+              isVerified[ind] = parseFloat(isVerified[ind]).toFixed(2)
+              break;
           case 8:
             isVerified[ind].splice(8, 0, condos_id)
             break;
