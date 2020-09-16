@@ -8,7 +8,7 @@ exports.imagen = async (req, res) => {
   try {
     let uuid = req.params.uuid;
 
-    let imagen = await fetch("http://api.cs100.cl/v1/workers/face/" + uuid)
+    let imagen = await fetch("https://api.cs100.cl/v1/workers/face/" + uuid)
       .then(res => {
         let dest = fs.createWriteStream("./img.png");
         return base64.encode(res.buffer());
